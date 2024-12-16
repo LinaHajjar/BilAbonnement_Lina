@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/MyCSS.css">
+    <title>Lejekontrakter</title>
+</head>
+<body>
+
+<div class="department-nav">
+    <span class="department-label">Afdeling: </span>
+    <span class="department-name">Biludlejning</span>
+</div>
+
+<div class="side-nav">
+    <!-- Logo -->
+    <div class="nav-logo">
+        <img src="/Billeder/BILABONNEMENT.png" alt="Logo">
+    </div>
+
+    <!-- Navigation buttons -->
+
+    <a th:href="@{/backToManage}" class="nav-button">Tilbage til menu</a>
+    <a th:href="@{/nyKontrakt}" class="nav-button1">Tilføj ny lejekontrakt</a>
+
+    <!-- Logout button -->
+    <a th:href="@{/logUd}" class="nav-button logout-button">Log ud</a>
+</div>
+
+
+<div class="main-content">
+    <h1 class="lejekontrakt-h1">Alle lejekontrakter</h1>
+
+
+
+    <div class="form-template">
+        <form th:action="@{/kundensKontrakter}" method="post">
+            <label for="telefonnummer">Søg efter en kundes lejekontrakter</label>
+            <input type="tel" id="telefonnummer" name="telefonnummer"
+                   placeholder="Kundens telefonnummer" required
+                   minlength="8" maxlength="8">
+            <button type="submit" class="søg-efter-kundens-kontrakter">Søg efter kundens kontrakter</button>
+
+            <div th:if="${ingenKontrakt}" class="error-message">
+                <p th:text="${ingenKontrakt}"></p>
+
+                <div th:if="${nyKunde}">
+                    <!-- nav butten er bare en global style der blev lavet til navn baren, dens funktion er en grøn knap.-->
+                    <a th:href="@{/nyKunde}" class="nav-button1">Opret ny kunde</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Success message -->
+    <div th:if="${successMessage}" class="success-message">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <!-- Error message -->
+    <div th:if="${errorMessage}" class="error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <div th:if="${opretNyKunde}">
+        <p>Vil du oprette en ny kunde?</p>
+        <a th:href="@{/nyKunde}" class="ny-kunde-link">Tryk her</a>
+    </div>
+
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
+
+    <div th:if="${ikkeFundet}" class="error-message">
+        <p th:text="${ikkeFundet}"></p>
+    </div>
+
+    <table class="lejekontrakt-table">
+        <thead>
+        <tr>
+            <th>Lejekontrakt id</th>
+            <th>Telefonnummer</th>
+            <th>Nummerplade</th>
+            <th>Start dato</th>
+            <th>Slut dato</th>
+            <th>Max km</th>
+            <th>Pris</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="lejekontrakt: ${lejekontrakter}">
+            <td th:text="${lejekontrakt.lejekontrakt_id}"></td>
+            <td th:text="${lejekontrakt.telefonnummer}"></td>
+            <td th:text="${lejekontrakt.nummerplade}"></td>
+            <td th:text="${lejekontrakt.startdato}"></td>
+            <td th:text="${lejekontrakt.slutdato}"></td>
+            <td th:text="${lejekontrakt.maxKm}"></td>
+            <td th:text="${lejekontrakt.pris}"></td>
+            <td class="slet-kontrakt">
+                <form th:action="@{/sletKontrakt}" method="post">
+                    <input type="hidden" name="lejekontrakt_id" th:value="${lejekontrakt.lejekontrakt_id}">
+                    <button type="submit" class="slet-kontrakt-knap">Slet lejekontrakt</button>
+                </form>
+
+                <!--add a button to edit and update a contract-->
+                <a th:href="@{'/redigerLejeKontrakt/' + ${lejekontrakt.lejekontrakt_id}}">
+                    <button class="btn-redigerLejeKontrakt" id="btn-redigerLejeKontrakt">Rediger lejekontrakt</button> <!-- CSS to rediger-knap-->
+                </a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+</body>
+</html>

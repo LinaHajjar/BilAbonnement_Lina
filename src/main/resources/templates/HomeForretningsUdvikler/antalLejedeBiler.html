@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="MyCSS.css">
+    <title>Antal lejede biler</title>
+</head>
+<body>
+
+<div class="department-nav">
+    <span class="department-label">Afdeling: </span>
+    <span class="department-name">Forretnings udvikling</span>
+</div>
+
+
+<div class="main-content">
+    <h1 class="overskrift-lejedeBiler">Antal lejede biler i en periode</h1>
+    <!-- Side navigation bar -->
+    <div class="side-nav">
+        <!-- Logo -->
+        <div class="nav-logo">
+            <img src="/Billeder/BILABONNEMENT.png" alt="Logo">
+        </div>
+
+        <!-- Navigation buttons -->
+        <a th:href="@{/homeForretningsUdvikler}" class="nav-button">Tilbage til menu</a>
+
+        <!-- Logout button -->
+        <a th:href="@{/logUd}" class="nav-button logout-button">Log ud</a>
+    </div>
+
+    <div class="manage-options">
+
+
+        <!-- Required er i slutningen af input for at undgå whitelabel errors -->
+        <div class="form-template">
+            <form action="/antalLejedeBiler" method="post">
+                <label for="startdato">Fra Dato: </label>
+                <input type="date" id="startdato" name="startdato" required>
+                <label for="slutdato">Til Dato: </label>
+                <input type="date" id="slutdato" name="slutdato" required>
+                <label>Vælg mærke ved ønsket om specifik bilmærke:</label>
+                <label>(Lad stå uberørt, for alle modeller i perioden)</label>
+                <select id="maerke" name="maerke">
+                    <option value="" th:selected="${selectedMaerke == ''}">Vælg Mærke</option>
+                    <option th:each="m : ${maerker}"
+                            th:value="${m}"
+                            th:text="${m}"
+                            th:selected="${m == selectedMaerke}">
+                    </option>
+                </select>
+                <button type="submit">Vis Antallet</button>
+                <br>
+                <div>
+                    <p>Antal lejet biler ud fra den valgte periode:</p>
+                    <strong th:text="${lejedeBiler}"></strong>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

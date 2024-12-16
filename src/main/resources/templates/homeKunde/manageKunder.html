@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/MyCSS.css">
+    <title>Kunder</title>
+</head>
+<body>
+
+<div class="department-nav">
+    <span class="department-label">Afdeling: </span>
+    <span class="department-name">Biludlejning</span>
+</div>
+
+<div class="main-content">
+    <h1 class="kunde-h1">Alle kunder</h1>
+
+    <div th:if="${registreret}" class="success-message">
+        <p th:text="${registreret}"></p>
+    </div>
+
+    <div th:if="${error}" class="error-message">
+        <p th:text="${error}"></p>
+    </div>
+
+
+
+    <table class="kunde-table">
+        <thead>
+        <tr>
+            <th>Telefonnummer</th>
+            <th>Email</th>
+            <th>Fornavn</th>
+            <th>Efternavn</th>
+            <th>Adresse</th>
+            <th>Postnr</th>
+            <th>By</th>
+            <th>Kørekortnr</th>
+            <th>Udstedelsesdato</th>
+            <th>Slet kunde</th>
+            <th>Aktion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="kunde: ${kunder}">
+            <td th:text="${kunde.telefonnummer}"></td>
+            <td th:text="${kunde.fornavn}"></td>
+            <td th:text="${kunde.efternavn}"></td>
+            <td th:text="${kunde.email}"></td>
+            <td th:text="${kunde.adresse}"></td>
+            <td th:text="${kunde.postnummer}"></td>
+            <td th:text="${kunde.byen}"></td>
+            <td th:text="${kunde.koerekortnummer}"></td>
+            <td th:text="${kunde.udstedelsdato}"></td>
+            <td class="slet-kunde">  <!-- if we can change the name to class="actions" instead of "slet-kunde" because I added the update button-->
+                <form th:action="@{/sletKunde}" method="post">
+                    <input type="hidden" name="telefonnummer" th:value="${kunde.telefonnummer}">
+                    <button type="submit" class="slet-kunde-knap">Slet kunde</button>
+                </form>
+
+                <!--add a button to edit and update a customer-->
+                <a th:href="@{'/redigerKunde/' + ${kunde.telefonnummer}}">
+                    <button class="btn-redigerKunde" id="btn-redigerKunde">Rediger Kunde</button> <!-- CSS to rediger-knap-->
+                </a>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+    <!-- Side navigation bar -->
+    <div class="side-nav">
+        <!-- Logo -->
+        <div class="nav-logo">
+            <img src="/Billeder/BILABONNEMENT.png" alt="Logo">
+        </div>
+
+        <!-- Navigation buttons -->
+
+        <a th:href="@{/manage}" class="nav-button">Tilbage til menu</a>
+        <a th:href="@{/nyKunde}" class="nav-button1">Tilføj ny kunde</a>
+        <!-- Logout button -->
+        <a th:href="@{/logUd}" class="nav-button logout-button">Log ud</a>
+    </div>
+</div>
+
+</body>
+</html>

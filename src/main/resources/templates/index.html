@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="MyCSS.css">
+    <title>Login</title>
+</head>
+<body class="login-page">
+
+<div class="login-container">
+    <!-- Logo -->
+    <div class="logo-container">
+        <img src="/Billeder/BILABONNEMENT.png" alt="Application Logo" class="logo">
+    </div>
+
+    <!-- Login form -->
+    <h1 class="login-h1">Login</h1>
+
+    <div th:if="${wrongLogIn}" class="error-message">
+        <p th:text="${wrongLogIn}"></p>
+    </div>
+
+    <form th:action="@{/loginInfo}" method="post" class="login-box">
+        <label>Brugernavn</label>
+        <input type="text" name="brugernavn" placeholder="Brugernavn" required>
+        <label>Kodeord</label>
+        <input type="password" name="kode" placeholder="Kodeord" required>
+        <button type="submit" class="login-submit-button">Login</button>
+    </form>
+</div> <!-- Lukker den eneste login-container -->
+
+</body>
+</html>>
