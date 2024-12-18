@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bilhaandtering</title>
+    <link rel="stylesheet" type="text/css" href="/MyCSS.css">
+</head>
+<body>
+<div class="department-nav">
+    <span class="department-label">Afdeling: </span>
+    <span class="department-name">Skadehåndtering </span>
+</div>
+<!-- Side navigation bar -->
+<div class="side-nav">
+    <!-- Logo -->
+    <div class="nav-logo">
+        <img src="/Billeder/BILABONNEMENT.png" alt="Logo">
+    </div>
+
+    <!-- Navigation buttons -->
+    <a th:href="@{/manage}" class="nav-button">Tilbage til menu</a>
+
+    <!-- login credentials-->
+    <div class="login-credetials">
+        <p class="department-brugerlogin"> Bruger login:</p>
+        <p class="department-loginUser"> <strong th:text="${session.rolle}"></strong></p>
+    </div>
+
+    <!-- logout button -->
+    <a th:href="@{/logUd}" class="nav-button logout-button">Log ud</a>
+</div>
+
+<!-- Overskrift h1 -->
+
+
+<div class="main-content">
+    <h1> Alle Bilhåndteringer</h1>
+    <div class="table-container">
+        <table class="bil-table">
+            <thead>
+            <tr>
+                <th>håndterings id</th>
+                <th>Lejekontrakt nr</th>
+                <th>Nummerplade</th>
+                <th>Håndterings dato</th>
+                <th>Lokation</th>
+                <th>Type</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="haandtering: ${bilhaandteringer}">
+                <td th:text="${haandtering.haandtering_id}"></td>
+                <td th:text="${haandtering.lejekontrakt_id}"></td>
+                <td th:text="${haandtering.nummerplade}"></td>
+                <td th:text="${haandtering.handlingsdato}"></td>
+                <td th:text="${haandtering.handlingsLokation}"></td>
+                <td th:text="${haandtering.type != null ? haandtering.type.name() : ''}"></td>
+                <td th:text="${haandtering.status != null ? haandtering.status.name() : ''}"></td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

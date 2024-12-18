@@ -14,7 +14,6 @@ public class SkaderService {
     @Autowired
     SkaderRepo skaderRepo;
 
-
     public List<Skader> getAllSkader() {
         return skaderRepo.getAllSkader();
     }
@@ -26,6 +25,5 @@ public class SkaderService {
     public List<Skader> getSkaderById(int lejekontraktid) {
         return skaderRepo.seSkaderById(lejekontraktid);
     }
-
 
 }

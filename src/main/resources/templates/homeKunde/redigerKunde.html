@@ -7,6 +7,11 @@
 </head>
 <body>
 
+<div class="department-nav">
+    <span class="department-label">Afdeling: </span>
+    <span class="department-name">Skadehåndtering </span>
+</div>
+
 <!-- Side navigation bar -->
 <div class="side-nav">
     <!-- Logo -->
@@ -15,61 +20,67 @@
     </div>
 
     <!-- Navigation buttons -->
-    <a th:href="@{/manage}" class="nav-button">Tilbage til menu</a>
+    <a th:href="@{/backToCustomer}" class="nav-button">Tilbage til kunder</a>
 
-    <!-- Logout button -->
+    <!-- login credentials-->
+    <div class="login-credetials">
+        <p class="department-brugerlogin"> Bruger login:</p>
+        <p class="department-loginUser"> <strong th:text="${session.rolle}"></strong></p>
+    </div>
+
+    <!-- logout button -->
     <a th:href="@{/logUd}" class="nav-button logout-button">Log ud</a>
 </div>
 
 <h1>Rediger kundens informationer</h1>
-
-<form action="/redigerKunde" method="post">
-    <input type="hidden" name="telefonnummer" th:value="${kunde.telefonnummer}"> <!--the label is hidden and cannot be changed-->
-
-
-    <td>
-        <label for="fornavn">Fornavn:</label>
-        <input type="text" id="fornavn" name="fornavn" placeholder="Fornavn" required th:value="${kunde.fornavn}">
-    </td>
-
-    <td>
-        <label for="efternavn">Efternavn:</label>
-        <input type="text" id="efternavn" name="efternavn" placeholder="Efternavn" required th:value="${kunde.efternavn}">
-    </td>
-
-    <td>
-        <label for="email">E-mail:</label>
-        <input type="text" id="email" name="email" placeholder="E-mail" required th:value="${kunde.email}">
-    </td>
-
-    <td>
-        <label for="adresse">Adresse:</label>
-        <input type="text" id="adresse" name="adresse" placeholder="Adresse" required th:value="${kunde.adresse}">
-    </td>
-
-    <td>
-        <label for="postnummer">Postnummer:</label>
-        <input type="text" id="postnummer" name="postnummer" placeholder="Postnummer" required th:value="${kunde.postnummer}">
-    </td>
+<div class="form-template">
+    <form action="/redigerKunde" method="post">
+        <input type="hidden" name="telefonnummer" th:value="${kunde.telefonnummer}"> <!--the label is hidden and cannot be changed-->
 
 
-    <td>
-        <label for="byen">By: </label>
-        <input type="text" id="byen" name="byen" placeholder="By" required th:value="${kunde.byen}">
-    </td>
+        <td>
+            <label for="fornavn">Fornavn:</label>
+            <input type="text" id="fornavn" name="fornavn" placeholder="Fornavn" required th:value="${kunde.fornavn}">
+        </td>
+
+        <td>
+            <label for="efternavn">Efternavn:</label>
+            <input type="text" id="efternavn" name="efternavn" placeholder="Efternavn" required th:value="${kunde.efternavn}">
+        </td>
+
+        <td>
+            <label for="email">E-mail:</label>
+            <input type="text" id="email" name="email" placeholder="E-mail" required th:value="${kunde.email}">
+        </td>
+
+        <td>
+            <label for="adresse">Adresse:</label>
+            <input type="text" id="adresse" name="adresse" placeholder="Adresse" required th:value="${kunde.adresse}">
+        </td>
+
+        <td>
+            <label for="postnummer">Postnummer:</label>
+            <input type="text" id="postnummer" name="postnummer" placeholder="Postnummer" required th:value="${kunde.postnummer}">
+        </td>
 
 
-    <label>Kørekort-nummer:</label>
-    <span th:text="${kunde.koerekortnummer}"></span> <!--cannot be changed-->
+        <td>
+            <label for="byen">By: </label>
+            <input type="text" id="byen" name="byen" placeholder="By" required th:value="${kunde.byen}">
+        </td>
 
 
-    <input type="hidden" name="udstedelsdato" th:value="${kunde.udstedelsdato}">
-    <label>Udstedelsdato:</label>
-    <span th:text="${kunde.udstedelsdato}"></span> <!--cannot be changed-->
+        <label>Kørekort-nummer:</label>
+        <span th:text="${kunde.koerekortnummer}"></span> <!--cannot be changed-->
 
 
-    <input type="submit" value="Gem ændringer">
-</form>
+        <input type="hidden" name="udstedelsdato" th:value="${kunde.udstedelsdato}">
+        <label>Udstedelsdato:</label>
+        <span th:text="${kunde.udstedelsdato}"></span> <!--cannot be changed-->
 
+
+        <input type="submit" class="tilføj-lejekontrakt-knap" value="Gem ændringer">
+    </form>
+</div>
 </body>
-</html>
+</html>>

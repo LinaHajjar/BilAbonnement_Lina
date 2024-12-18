@@ -11,19 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public class BilHaandteringRepo {
 
     @Autowired
     JdbcTemplate template;
-
-
-//    public List<BilHaandtering> seAlleHaandteringer(){
-//
-//        String sql = "SELECT * FROM BilHaandtering";
-//        RowMapper rowMapper = new BeanPropertyRowMapper(BilHaandtering.class);
-//        return template.query(sql, rowMapper);
-//    }
 
     public List<BilHaandtering> seAlleHaandteringer(){
 
@@ -72,16 +65,5 @@ public class BilHaandteringRepo {
         String sql = "UPDATE bilhaandtering SET status = ? WHERE haandtering_id = ?";
         template.update(sql, status.name(), haandtering_id);
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-
 @Controller
 public class LejekontraktController {
 
@@ -152,6 +151,5 @@ public class LejekontraktController {
     }
 
 }
-
 
 

@@ -7,26 +7,35 @@
   <link rel="stylesheet" href="MyCSS.css">
 </head>
 <body>
-<h1 class="manage-h1">Vælg</h1>
-
+<!-- top nav -->
+<div class="department-nav">
+  <span class="department-label">Afdeling: </span>
+  <span class="department-name">Skadehåndtering </span>
+</div>
+<!-- SIDE NAV -->
 <div class="side-nav">
   <!-- Logo -->
   <div class="nav-logo">
     <img src="/Billeder/BILABONNEMENT.png" alt="Logo">
   </div>
 
-  <p>Du er logget ind som: <strong th:text="${session.rolle}"></strong></p>
-
   <!-- Navigation buttons -->
 
+  <!-- login credentials-->
+  <div class="login-credetials">
+    <p class="department-brugerlogin"> Bruger login:</p>
+    <p class="department-loginUser"> <strong th:text="${session.rolle}"></strong></p>
+  </div>
+
+  <!-- logout button -->
   <a th:href="@{/logUd}" class="nav-button logout-button">Log ud</a>
 </div>
 
 <div class="main-content">
-  <h1 class="manage-h1">Vælg</h1>
+  <h1>Vælg</h1>
 
   <div class="manage-options">
-    <a th:href="@{/manageKunder}" class="manage-kunde-knap">
+    <a th:href="@{/manageKunder}" class="manage-biler-knap">
       <img src="/Billeder/håndterkunder.webp" alt="Kunder">
       <span>Tilføj eller find en kunde</span>
     </a>
@@ -36,14 +45,15 @@
       <span>Se alle Biler</span>
     </a>
 
-    <a th:href="@{/manageKontrakter}" class="manage-kontrakter-knap">
+    <a th:href="@{/manageKontrakter}" class="manage-biler-knap">
       <img src="/Billeder/manageKontrakter.webp" alt="Kontrakter">
       <span>Tilføj eller find lejekontrakter</span>
     </a>
     <a th:href="@{/manageHaandteringer}" class ="manage-biler-knap">
-      <img src="/Billeder/manageKontrakter.webp" alt="Kontrakter">
-      <span> Manage Bil-Haandeteringer</span>
+      <img src="/Billeder/UdlevereRetuner04.webp" alt="Kontrakter">
+      <span>Bil håndterings status</span>
     </a>
+
   </div>
 </div>
 </body>

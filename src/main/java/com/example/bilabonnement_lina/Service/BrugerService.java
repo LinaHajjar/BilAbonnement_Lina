@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
+
+
 @Service
 public class BrugerService {
 
-
     @Autowired
     BrugerRepo brugerRepo;
-
 
     public List<Bruger> getAllUsers(){
         return brugerRepo.getAllUsers();

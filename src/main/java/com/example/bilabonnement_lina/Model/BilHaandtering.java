@@ -81,14 +81,4 @@ public class BilHaandtering {
         this.status = status;
     }
 
-
-
-
-
-
-
-
-
-
-
 }

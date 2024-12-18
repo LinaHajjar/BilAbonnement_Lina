@@ -2,6 +2,7 @@ package com.example.bilabonnement_lina.Repository;
 
 import com.example.bilabonnement_lina.Model.Bil;
 import com.example.bilabonnement_lina.Model.Kunde;
+import com.example.bilabonnement_lina.Model.LejeKontrakt;
 import com.example.bilabonnement_lina.Model.TopBil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -17,9 +18,9 @@ import java.util.List;
 @Repository
 public class BilRepo {
     @Autowired
-    JdbcTemplate template;//jdbc: java db connection, det laver et object der opretter hver gang connection til db
+    JdbcTemplate template; //jdbc: java db connection, det laver et object der opretter hver gang connection til db
 
-    public List <Bil> getAllBil() throws SQLException {
+    public List<Bil> getAllBil() throws SQLException {
         String sql = "SELECT * FROM bil";
         RowMapper<Bil> rowMapper = new BeanPropertyRowMapper<>(Bil.class); //opretter objekter et af gang og gemme dem i en list
         return template.query(sql, rowMapper);
@@ -27,18 +28,18 @@ public class BilRepo {
 
     public Bil getBilByNummerplade(String nummerplade) throws SQLException {
         String sql = "select * from bil where nummerplade = ?";
-        RowMapper<Bil> rowMapper=new BeanPropertyRowMapper<>(Bil.class);
-        Bil bil=template.queryForObject(sql, rowMapper, nummerplade);
+        RowMapper<Bil> rowMapper = new BeanPropertyRowMapper<>(Bil.class);
+        Bil bil = template.queryForObject(sql, rowMapper, nummerplade);
         return bil;
     }
 
-    public List<String> alleNummerplader(){
+    public List<String> alleNummerplader() {
         String sql = "select nummerplade from bil";
         return template.queryForList(sql, String.class); // tager alle nummerplader og sætter det i en liste
     }
 
     public double getSamletIndtægt(LocalDate fraDato, LocalDate tilDato) throws SQLException {
-        String sql ="SELECT SUM(pris) FROM lejekontrakt WHERE (startdato > ? AND slutdato < ?)";
+        String sql = "SELECT SUM(pris) FROM lejekontrakt WHERE (startdato > ? AND slutdato < ?)";
 
         Double result = template.queryForObject(sql, Double.class, fraDato, tilDato);
 
@@ -46,15 +47,15 @@ public class BilRepo {
     }
 
     public TopBil getTopLejedeModeller(LocalDate fraDato, LocalDate tilDato) throws SQLException {
-        String sql ="SELECT b.maerke, b.model, COUNT(l.nummerplade) AS antal\n" +
+        String sql = "SELECT b.maerke, b.model, COUNT(l.nummerplade) AS antal\n" +
                 "        FROM bil b\n" +
                 "        JOIN lejekontrakt l ON b.nummerplade = l.nummerplade\n" +
                 "        WHERE l.startdato >= ? AND l.slutdato <= ?\n" +
                 "        GROUP BY b.maerke, b.model\n" +
                 "        ORDER BY antal DESC\n" +
                 "        LIMIT 1";
-        RowMapper <TopBil> rowMapper = new BeanPropertyRowMapper<>(TopBil.class);
-        TopBil topBil=template.queryForObject(sql, rowMapper, fraDato, tilDato);
+        RowMapper<TopBil> rowMapper = new BeanPropertyRowMapper<>(TopBil.class);
+        TopBil topBil = template.queryForObject(sql, rowMapper, fraDato, tilDato);
         return topBil;
 
     }
@@ -77,20 +78,29 @@ public class BilRepo {
         );
     }
 
-    public void redigerBil(Bil bil){
+    public void redigerBil(Bil bil) {
         String sql = "UPDATE bil SET maerke=?, model=?, odometer=?, co2udledning=? WHERE nummerplade= ?";
         template.update(sql, bil.getMaerke(), bil.getModel(), bil.getOdometer(), bil.getCo2udledning(), String.valueOf(bil.getNummerplade()));
     }
 
 
-    public boolean sletBil(String nummerplade){
+    public boolean sletBil(String nummerplade) {
 
         String sql = "DELETE FROM bil WHERE nummerplade = ?";
 
-        return template.update(sql,nummerplade)>0;
+        return template.update(sql, nummerplade) > 0;
     }
 
 
+    public List<LejeKontrakt> seBiler(LocalDate startdato, LocalDate slutdato) {
+        String sql = "SELECT nummerplade, startdato, slutdato  FROM lejekontrakt lk WHERE startdato >= ? AND slutdato <=? ORDER BY nummerplade, startdato";
+        RowMapper<LejeKontrakt> rowMapper = new BeanPropertyRowMapper<>(LejeKontrakt.class);
+
+        java.sql.Date sqlStartdato = java.sql.Date.valueOf(startdato);
+        java.sql.Date sqlSlutdato = java.sql.Date.valueOf(slutdato);
+
+        return template.query(sql, rowMapper, sqlStartdato, sqlSlutdato);
+    }
 
 
 }

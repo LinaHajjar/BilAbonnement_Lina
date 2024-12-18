@@ -11,13 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public class BrugerRepo {
 
     @Autowired
     JdbcTemplate template;
-
-
 
     public List<Bruger> getAllUsers(){
         String sql = "select * from medarbejde";

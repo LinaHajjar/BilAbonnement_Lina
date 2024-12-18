@@ -3,7 +3,6 @@ package com.example.bilabonnement_lina.Controller;
 import com.example.bilabonnement_lina.Model.Bil;
 import com.example.bilabonnement_lina.Model.LejeKontrakt;
 import com.example.bilabonnement_lina.Service.BilService;
-import com.example.bilabonnement_lina.Service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -20,9 +19,6 @@ public class BilController {
     @Autowired
     BilService bilService;
 
-    @Autowired
-    private BookingService bookingService;
-
     @GetMapping("/manageBiler")
     public String allBiler(Model model) throws SQLException {
         model.addAttribute("biler", bilService.getAllBil());
@@ -35,7 +31,7 @@ public class BilController {
             @RequestParam("slutdato") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate slutdato,
             Model model
     ) throws SQLException {
-        List<LejeKontrakt> availableCars = bookingService.seBiler(startdato, slutdato);
+        List<LejeKontrakt> availableCars = bilService.seBiler(startdato, slutdato);
         model.addAttribute("availableCars", availableCars);
         return "homeBil/ledigeBiler";
 

@@ -30,13 +30,7 @@ public class BilHaandteringController {
     }
 
 
-
-
-
-
-
     @GetMapping("/opretteUdlevering")
-
     public String nyUdlevereHaandtering(Model model) throws SQLException {
         return "homeBilHaandtering/nyUdlevering";
     }
@@ -46,13 +40,8 @@ public class BilHaandteringController {
             @RequestParam("lejekontrakt_id") int lejekontrakt_id, @RequestParam("nummerplade") String nummerplade, @RequestParam("handlingsdato") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate handlingsdato,
             @RequestParam("handlingslokation") String handlingslokation, @RequestParam("status") String status, Model model) throws SQLException {
 
-
-
-
         BilHaandtering.type convertedtype = BilHaandtering.type.UDLEVERING;
-
         BilHaandtering.status convertedstatus = BilHaandtering.status.valueOf(status.toUpperCase());
-
 
         BilHaandtering newHaandtering = new BilHaandtering();
         newHaandtering.setLejekontrakt_id(lejekontrakt_id);
@@ -98,16 +87,6 @@ public class BilHaandteringController {
 
         return "redirect:/manageBilHaandtering";
     }
-
-//    @PostMapping("/opdaterStatus")
-//    public String opdaterStatus(@RequestParam("status") String status,@RequestParam("haandteringid") int haandteringId, Model model) throws SQLException {
-//        BilHaandtering.status convertedStatus = BilHaandtering.status.valueOf(status.toUpperCase());
-//
-//        bilHaandteringService.opdaterStatus(haandteringId, convertedStatus);
-//
-//        return "redirect:/manageBilHaandtering";
-//    }
-
 
     //opdaterstatus
     @PostMapping("/opdaterStatus")
